@@ -1,0 +1,25 @@
+{
+  "name": "devguard/php-guard",
+  "description": "DevGuard standalone PHP guard middleware for remote project locking, invoice milestone autolock, and domain allowlisting.",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "DevGuard Security Team",
+      "homepage": "https://devguard.uk"
+    }
+  ],
+  "require": {
+    "php": ">=7.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "DevGuard\\": "src/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-main": "1.0-dev"
+    }
+  }
+}
