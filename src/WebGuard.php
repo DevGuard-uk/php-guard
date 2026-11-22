@@ -41,7 +41,12 @@ class WebGuard
 
         $this->projectId = $projectId;
         $this->apiUrl = rtrim((string)($config['apiUrl'] ?? getenv('DEVGUARD_API_URL') ?: 'https://api.devguard.uk'), '/');
-        $this->apiKey = !empty($config['apiKey']) ? (string)$config['apiKey'] : null;
+        $sdkKey = !empty($config['sdkKey']) ? (string)$config['sdkKey'] : null;
+        $legacyKey = !empty($config['apiKey']) ? (string)$config['apiKey'] : null;
+        $envSdk = getenv('DEVGUARD_SDK_KEY') ?: null;
+        $envApi = getenv('DEVGUARD_API_KEY') ?: null;
+        $resolved = $sdkKey ?: $legacyKey ?: ($envSdk !== false && $envSdk !== '' ? (string)$envSdk : null) ?: ($envApi !== false && $envApi !== '' ? (string)$envApi : null);
+        $this->apiKey = $resolved !== null && $resolved !== '' ? $resolved : null;
         $this->failSafe = ($config['failSafe'] ?? 'open') === 'closed' ? 'closed' : 'open';
         $this->allowedDomains = $config['allowedDomains'] ?? null;
         $this->allowedPaths = (array)($config['allowedPaths'] ?? []);
